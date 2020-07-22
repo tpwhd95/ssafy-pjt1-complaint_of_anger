@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.repository.NoticeDAO">
+
+
+	<select id="selectNotice" resultType="notice">
+		select notice_no, notice_id, notice_title, notice_content, notice_regtime
+		  from notice
+		 order by notice_no desc
+	</select>
+	
+
+	
+	<insert id="insertNotice" parameterType="notice">
+		insert into notice(
+			notice_title, notice_id, notice_content
+		) values (
+			#{notice_title}, #{notice_id}, #{notice_content}
+		)
+	</insert>
+	
+	<select id="selectNoticeBynotice_no" resultType="notice">
+		select notice_no, notice_id, notice_title, notice_content, notice_regtime
+		  from notice 
+		 where notice_no = #{notice_no}
+	</select>
+	
+	<update id="updateNotice" parameterType="notice">
+		update notice 
+		   set notice_id = #{notice_id}, 
+		   	   notice_title = #{notice_title}, 
+		   	   notice_content = #{notice_content}
+		 where notice_no = #{notice_no}
+	</update>
+	
+	
+	<delete id="deleteNotice" parameterType="int">
+		delete 
+		  from notice 
+		 where notice_no = #{notice_no}
+	</delete>
+
+</mapper>
+
