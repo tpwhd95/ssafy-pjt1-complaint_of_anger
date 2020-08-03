@@ -1,14 +1,15 @@
 <template>
   <nav
-    class="d-flex justify-content-around navbar navbar-light fixed-top border-bottom border-info"
+    class="d-flex justify-content-around navbar navbar-light fixed-top border-bottom border-info p-1"
     style="padding: 16px; background-color: #ffffff;"
   >
     <!-- 1 -->
     <b-button v-b-toggle.sidebar-1 class="bg-info border-info">MENU</b-button>
 
     <!-- 2 -->
-    <router-link to="/" style="text-decoration: none;">
-      <h1 class="ft-bhs" style="margin: 0px;">분노의 민원</h1>
+    <router-link to="/" class="text-center" style="text-decoration: none;">
+      <!-- <h1 class="ft-bhs" style="margin: 0px;">분노의 민원</h1> -->
+      <img src="@/assets/Logo_1.png" alt="logo-image" style="width: 30%;" />
     </router-link>
 
     <!-- 3 -->

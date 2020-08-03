@@ -3,27 +3,27 @@ package com.ssafy.domain;
 import java.util.Date;
 
 public class SNSUser {
-	private String id;
+	private String userNo;
 	private String email;
 	private String name;
 	private String gender;
 	private Date birth;
 
 	public SNSUser() {}
-	public SNSUser(String id, String email, String name, String gender, Date birth) {
-		this.id = id;
+	public SNSUser(String userNo, String email, String name, String gender, Date birth) {
+		this.userNo = userNo;
 		this.email = email;
 		this.name = name;
 		this.gender = gender;
 		this.birth = birth;
 	}
 
-	public String getId() {
-		return id;
+	public String getUserNo() {
+		return userNo;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
 	}
 
 	public String getEmail() {
@@ -60,7 +60,7 @@ public class SNSUser {
 
 	@Override
 	public String toString() {
-		return "SNSUser [id=" + id + ", email=" + email + ", name=" + name + ", gender=" + gender + ", birth=" + birth
+		return "SNSUser [userNo=" + userNo + ", email=" + email + ", name=" + name + ", gender=" + gender + ", birth=" + birth
 				+ "]";
 	}
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mappers/gueset.xml -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mappers/user.xml -->
+<mapper namespace="com.ssafy.repository.SNSUserRepository"> <!-- mybatis는 namespace필수!! -->
+
+	<!-- 로그인 -->
+	<select id="select" resultType="SNSUser">
+		select user_no as userNo, email, name, gender, birth
+		from snsuser
+		where email=#{email} and password=#{password}
+	</select>
+	
+	<!-- 회원 조회 -->
+	<select id="selectUser" resultType="SNSUser">
+		select user_no as userNo, email, name, gender, birth
+		from snsuser
+		where email=#{email}
+	</select>
+	
+	<!-- 회원 등록 -->
+	<insert id="insert">
+		insert into snsuser(email, name, gender, birth)
+		values(#{email}, #{name}, #{gender}, #{birth})
+	</insert>
+	
+	<!-- 회원 수정 -->
+	<update id="update">
+		update snsuser
+		set name=#{name}, gender=#{gender}, birth=#{birth}
+		where email=#{email}
+	</update>
+	
+	<!-- 회원 삭제 -->
+	<delete id="delete">
+		delete from snsuser
+		where email=#{email}
+	</delete>
+</mapper>

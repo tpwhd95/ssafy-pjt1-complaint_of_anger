@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.domain.User;
-import com.ssafy.repository.UserRepository;
+import com.ssafy.repository.SNSUserRepository;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class SNSUserServiceImpl implements SNSUserService {
 	
 	@Autowired
-	UserRepository repo;
+	SNSUserRepository repo;
 
 	@Override
 	public User login(User user) throws Exception {
