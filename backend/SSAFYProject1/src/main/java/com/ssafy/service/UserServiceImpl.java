@@ -46,5 +46,10 @@ public class UserServiceImpl implements UserService {
 	public User findPassword(User user) throws Exception {
 		return repo.findPassword(user);
 	}
+
+	@Override
+	public User detailByNo(int userNo) throws Exception {
+		return repo.selectUserByNo(userNo);
+	}
 	
 }

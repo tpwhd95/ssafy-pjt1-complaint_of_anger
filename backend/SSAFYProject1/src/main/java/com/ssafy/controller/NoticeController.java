@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.domain.Notice;
 import com.ssafy.service.NoticeService;
+import com.ssafy.util.JWTUtil;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -31,6 +33,7 @@ public class NoticeController {
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
+	private static final String WRONG = "wrong";
 
 	@Autowired
 	private NoticeService noticeService;
@@ -45,9 +48,16 @@ public class NoticeController {
     
     @ApiOperation(value = "새로운 공지사항을 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping
-	public ResponseEntity<String> writeNotice(@RequestBody Notice notice) {
+	public ResponseEntity<String> writeNotice(@RequestBody Notice notice, @RequestHeader("token") String token) {
 		logger.debug("writeNotice - 호출");
 		System.out.println(notice);
+		
+		new JWTUtil();
+		if(JWTUtil.verifyToken(token).equals("관리자")) System.out.println("토큰 검증 완료!!");
+		else {
+			return new ResponseEntity<String>(WRONG, HttpStatus.BAD_REQUEST);
+		}
+		
 		if (noticeService.writeNotice(notice)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -63,9 +73,14 @@ public class NoticeController {
     
     @ApiOperation(value = "글번호에 해당하는 공지사항의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("{notice_no}")
-	public ResponseEntity<String> updateNotice(@RequestBody Notice notice) {
+	public ResponseEntity<String> updateNotice(@RequestBody Notice notice, @RequestHeader("token") String token) {
 		logger.debug("updateNotice - 호출");
-		logger.debug("" + notice);
+		
+		new JWTUtil();
+		if(JWTUtil.verifyToken(token).equals("관리자")) System.out.println("토큰 검증 완료!!");
+		else {
+			return new ResponseEntity<String>(WRONG, HttpStatus.BAD_REQUEST);
+		}
 		
 		if (noticeService.updateNotice(notice)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
@@ -75,8 +90,14 @@ public class NoticeController {
     
     @ApiOperation(value = "글번호에 해당하는 공지사항의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("{notice_no}")
-	public ResponseEntity<String> deleteNotice(@PathVariable int notice_no) {
+	public ResponseEntity<String> deleteNotice(@PathVariable int notice_no, @RequestHeader("token") String token) {
 		logger.debug("deleteNotice - 호출");
+		System.out.println(token);
+		
+		new JWTUtil();
+		if(JWTUtil.verifyToken(token).equals("관리자")) System.out.println("토큰 검증 완료!!");
+		else return new ResponseEntity<String>(WRONG, HttpStatus.BAD_REQUEST);
+		
 		if (noticeService.deleteNotice(notice_no)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}

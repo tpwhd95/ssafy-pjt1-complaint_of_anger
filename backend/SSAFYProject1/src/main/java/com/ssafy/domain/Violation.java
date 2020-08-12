@@ -146,7 +146,7 @@ public class Violation {
 	public void setLng(String lng) {
 		this.lng = lng;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Violation [violationNo=" + violationNo + ", userNo=" + userNo + ", email=" + email + ", item=" + item

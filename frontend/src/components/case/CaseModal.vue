@@ -139,14 +139,22 @@ export default {
   methods: {
     saveHandler() {
       http
-        .put(`/violation`, {
-          violationNo: this.violationitem.violationNo,
-          userNo: this.violationitem.userNo,
-          item: this.violationitem.item,
-          carNum: this.violationitem.carNum,
-          spot: this.violationitem.spot,
-          contents: this.violationitem.contents,
-        })
+        .put(
+          `/violation`,
+          {
+            violationNo: this.violationitem.violationNo,
+            userNo: this.violationitem.userNo,
+            item: this.violationitem.item,
+            carNum: this.violationitem.carNum,
+            spot: this.violationitem.spot,
+            contents: this.violationitem.contents,
+          },
+          {
+            headers: {
+              token: this.$session.get("token"),
+            },
+          }
+        )
         .then(({ data }) => {
           let msg = "저장에 실패하였습니다.";
           if (data === "success") {
@@ -165,7 +173,12 @@ export default {
     deleteHandler() {
       http
         .delete(
-          `/violation/${this.violationitem.userNo}/${this.violationitem.violationNo}`
+          `/violation/${this.violationitem.userNo}/${this.violationitem.violationNo}`,
+          {
+            headers: {
+              token: this.$session.get("token"),
+            },
+          }
         )
         .then(({ data }) => {
           let msg = "삭제에 실패하였습니다.";

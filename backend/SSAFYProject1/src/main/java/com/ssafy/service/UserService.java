@@ -6,6 +6,8 @@ public interface UserService {
 	User login(User user) throws Exception;
 
 	User detail(String email) throws Exception;
+	
+	User detailByNo(int userNo) throws Exception;
 
 	int signUp(User user) throws Exception;
 

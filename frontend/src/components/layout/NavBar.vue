@@ -35,7 +35,7 @@
 
         <div>
           <b-button
-            v-if="this.$session.get('email') != null"
+            v-if="this.$session.get('email') != null && this.$session.get('isSNS') == 0"
             v-b-modal.modal-memberInfo
             class="bg-danger rounded border-danger"
             style="padding: 7px 13px;"
@@ -516,6 +516,7 @@ export default {
             this.$session.set("gender", data.userinfo.gender);
             this.$session.set("birth", data.userinfo.birth);
             this.$session.set("phone", data.userinfo.phone);
+            this.$session.set("token", data.token);
             // sessionStorage.setItem("vue-session-key", "this.email");
             // sessionStorage.setItem("vue-session-key", "data.userinfo.userNo");
 
@@ -651,14 +652,22 @@ export default {
     },
     modifyHandler() {
       http
-        .put(`/user`, {
-          email: this.$session.get("email"),
-          password: this.pw,
-          name: this.name,
-          gender: this.gender,
-          birth: this.birth,
-          phone: this.phone,
-        })
+        .put(
+          `/user`,
+          {
+            email: this.$session.get("email"),
+            password: this.pw,
+            name: this.name,
+            gender: this.gender,
+            birth: this.birth,
+            phone: this.phone,
+          },
+          {
+            headers: {
+              token: this.$session.get("token"),
+            },
+          }
+        )
         .then(({ data }) => {
           // 여기서부터 코딩
           let msg = "회원수정에 실패하였습니다.";
@@ -711,7 +720,12 @@ export default {
           `/user/del`,
           JSON.stringify({
             email: this.$session.get("email"),
-          })
+          }),
+          {
+            headers: {
+              token: this.$session.get("token"),
+            },
+          }
         )
         .then(({ data }) => {
           let msg = "회원삭제에 실패하였습니다..";

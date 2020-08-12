@@ -106,6 +106,11 @@ export default {
             userNo: this.violationitem.userNo,
             violationNo: this.violationitem.violationNo,
             reportStatus: this.violationitem.reportStatus,
+          },
+          {
+            headers: {
+              token: this.$session.get("token"),
+            },
           }
         )
         .then(({ data }) => {
@@ -181,9 +186,17 @@ export default {
         this.violationitem.reportStatus != 0
       ) {
         http
-          .put(`/violation`, {
-            reportStatus: 0,
-          })
+          .put(
+            `/violation`,
+            {
+              reportStatus: 0,
+            },
+            {
+              headers: {
+                token: this.$session.get("token"),
+              },
+            }
+          )
           .then(({ data }) => {
             let msg = "저장에 실패하였습니다.";
             if (data === "success") {

@@ -20,6 +20,13 @@
 		where email=#{email}
 	</select>
 	
+	<!-- user_no으로 회원 조회 -->
+	<select id="selectUserByNo" resultType="User">
+		select user_no as userNo, email, password, name, gender, birth, phone, isSNS
+		from user
+		where user_no=#{userNo}
+	</select>
+	
 	<!-- 회원 등록 -->
 	<insert id="insert">
 		insert into user(email, password, name, gender, birth, phone, isSNS)

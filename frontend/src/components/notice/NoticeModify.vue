@@ -76,12 +76,20 @@ export default {
     },
     modifyHandler() {
       http
-        .put(`/notice/${this.notice_no}`, {
-          notice_no: this.notice_no,
-          notice_id: this.notice_id,
-          notice_title: this.notice_title,
-          notice_content: this.notice_content,
-        })
+        .put(
+          `/notice/${this.notice_no}`,
+          {
+            notice_no: this.notice_no,
+            notice_id: this.notice_id,
+            notice_title: this.notice_title,
+            notice_content: this.notice_content,
+          },
+          {
+            headers: {
+              token: this.$session.get("token"),
+            },
+          }
+        )
         .then(({ data }) => {
           let msg = "수정 처리시 문제가 발생했습니다.";
           if (data === "success") {

@@ -141,7 +141,11 @@ export default {
   },
   created() {
     http
-      .get(`/violation/${this.$session.get("userNo")}`)
+      .get(`/violation/${this.$session.get("userNo")}`, {
+        headers: {
+          token: this.$session.get("token"),
+        },
+      })
       .then(({ data }) => {
         if (data != null) {
           this.local_violationitems = data;

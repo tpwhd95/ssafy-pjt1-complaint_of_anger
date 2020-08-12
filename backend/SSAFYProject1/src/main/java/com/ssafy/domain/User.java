@@ -86,7 +86,7 @@ public class User {
 	public void setSNS(boolean isSNS) {
 		this.isSNS = isSNS;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "User [userNo=" + userNo + ", email=" + email + ", password=" + password + ", name=" + name + ", gender="

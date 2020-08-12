@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.domain.User;
 import com.ssafy.service.UserService;
+import com.ssafy.util.JWTUtil;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -36,6 +38,7 @@ public class UserController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	private static final String ERROR = "error";
+	private static final String WRONG = "wrong";
 
 	@Autowired
 	UserService service;
@@ -46,6 +49,7 @@ public class UserController {
 		logger.debug("login - 호출");
 		System.out.println(param);
 		
+		String JWT_token = null;
 		User input = new User();
 		input.setEmail(param.get("email").toString());
 		input.setPassword(param.get("password").toString());
@@ -68,8 +72,14 @@ public class UserController {
 				System.out.println(object.toString());
 				// System.out.println(gson.toJson(map));
 				
+				new JWTUtil();
+				JWT_token = JWTUtil.createJWTToken(user.getName(), user.getEmail(), user.getBirth(), user.getGender(), user.getUserNo(), false);
+				object.put("token", JWT_token);
+				System.out.println(JWT_token);
+				
 				return new ResponseEntity<String>(object.toString(), HttpStatus.OK); // gson.toJson(map)
 			} else {
+				
 				map.put("fail", FAIL);
 				return new ResponseEntity<String>(object.toString(), HttpStatus.NO_CONTENT);
 			}
@@ -90,12 +100,19 @@ public class UserController {
 	
 	@ApiOperation(value = "이메일에 맞는 회원 정보를 반환한다.", response = User.class)
 	@GetMapping // 회원 조회
-	public ResponseEntity<Map<String, Object>> userInfo(String email) {
+	public ResponseEntity<Map<String, Object>> userInfo(String email, @RequestHeader("token") String token) {
 		logger.debug("회원조회 - 호출");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		try {
 			User user = service.detail(email);
+			
+			new JWTUtil();
+			if (JWTUtil.verifyToken(token).equals("관리자")) System.out.println("토큰 검증 완료!!");
+			else {
+				map.put("wrong", WRONG);
+				return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+			}
 			
 			map.put("userinfo", user);
 			map.put("success", SUCCESS);
@@ -128,10 +145,17 @@ public class UserController {
 	
 	@ApiOperation(value = "회원수정 후 성공 여부를 반환한다.")
 	@PutMapping // 회원 수정
-	public ResponseEntity<Map<String, Object>> update(@RequestBody User user) {
+	public ResponseEntity<Map<String, Object>> update(@RequestBody User user, @RequestHeader("token") String token) {
 		logger.debug("회원수정 - 호출");
-		System.out.println(user);
+		System.out.println("유저 토큰 >> " + token);
 		Map<String, Object> map = new HashMap<String, Object>();
+
+		new JWTUtil();
+		if(JWTUtil.verifyToken(token).equals(user.getName())) System.out.println("토큰 검증 완료!!");
+		else {
+			map.put("wrong", WRONG);
+			return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+		}
 		
 		try {
 			if (service.modify(user) == 1) {
@@ -145,18 +169,24 @@ public class UserController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put("error", ERROR);
-			return new ResponseEntity<Map<String, Object>>(map, HttpStatus.NO_CONTENT);
+			return new ResponseEntity<Map<String, Object>>(map, HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 	
 	@ApiOperation(value = "회원삭제 후 성공 여부를 반환한다.")
 	@PostMapping("del") // 회원 삭제
-	public ResponseEntity<String> delete(@RequestBody Map<String, Object> param) {
+	public ResponseEntity<String> delete(@RequestBody Map<String, Object> param, @RequestHeader("token") String token) {
 		logger.debug("회원삭제 - 호출");
 		System.out.println(param);
 		String email = param.get("email").toString();
 		
 		try {
+			User user = service.detail(email);
+			
+			new JWTUtil();
+			if(JWTUtil.verifyToken(token).equals(user.getName())) System.out.println("토큰 검증 완료!!");
+			else return new ResponseEntity<String>(WRONG, HttpStatus.BAD_REQUEST);
+			
 			if(service.remove(email) == 1) return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 			else return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 		} catch (Exception e) {

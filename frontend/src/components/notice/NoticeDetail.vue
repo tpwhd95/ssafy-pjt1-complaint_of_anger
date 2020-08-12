@@ -59,7 +59,11 @@ export default {
   methods: {
     deleteHandler() {
       http
-        .delete(`/notice/${this.$session.get("notice_no")}`)
+        .delete(`/notice/${this.$session.get("notice_no")}`, {
+          headers: {
+            token: this.$session.get("token"),
+          },
+        })
         .then(({ data }) => {
           let msg = "삭제 처리시 문제가 발생했습니다.";
           if (data === "success") {

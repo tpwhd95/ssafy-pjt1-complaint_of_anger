@@ -55,16 +55,12 @@ export default new Vuex.Store({
   },
   actions: {
     getViolations(context) {
-      // const userNo = this.$session.get("userNo");
-      // console.log(userNo);
-      // var userData = sessionStorage.getItem("vue-session-key");
-      // console.log(this.$session.getAll());
       http
-        // .get(`/violation/1`)
-        // .get(`/violation/${this.$session.get("userNo")}`)
-        .get(`/violation`)
-        // .get(`/violation/${userNo}`)
-        // .get(`/violation/${this.violationitem.userNo}`)
+        .get(`/violation`, {
+          headers: {
+            token: this.$session.get("token"),
+          },
+        })
         .then(({ data }) => {
           context.commit("setViolations", data);
         })
@@ -73,9 +69,15 @@ export default new Vuex.Store({
         });
     },
     getViolation(context, payload) {
-      http.get(payload).then(({ data }) => {
-        context.commit("setViolations", data);
-      });
+      http
+        .get(payload, {
+          headers: {
+            token: this.$session.get("token"),
+          },
+        })
+        .then(({ data }) => {
+          context.commit("setViolations", data);
+        });
     },
     getNotices(context) {
       http

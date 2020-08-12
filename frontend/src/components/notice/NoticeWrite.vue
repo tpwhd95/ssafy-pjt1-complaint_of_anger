@@ -73,11 +73,19 @@ export default {
     },
     createHandler() {
       http
-        .post("/notice", {
-          notice_title: this.notice_title,
-          notice_id: this.$session.get("email"),
-          notice_content: this.notice_content,
-        })
+        .post(
+          "/notice",
+          {
+            notice_title: this.notice_title,
+            notice_id: this.$session.get("email"),
+            notice_content: this.notice_content,
+          },
+          {
+            headers: {
+              token: this.$session.get("token"),
+            },
+          }
+        )
         .then(({ data }) => {
           let msg = "등록 처리시 문제가 발생했습니다.";
           if (data === "success") {

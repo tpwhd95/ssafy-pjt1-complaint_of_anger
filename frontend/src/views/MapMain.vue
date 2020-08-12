@@ -21,23 +21,25 @@ export default {
     Map,
   },
   created() {
-    if (this.$session.get("email")) {
-      http
-        .get(`/violation/${this.$session.get("userNo")}`)
-        .then(({ data }) => {
-          if (data) {
-            // this.local_violationitems = data;
-            // this.items = data;
-            this.$store.state.violationitems = data;
-            // alert("ㅔㅗ");
-          } else {
-            alert(" 실패했습니다.");
-          }
-        })
-        .catch(() => {
-          alert("에러가 발생했습니다.");
-        });
-    }
+    http
+      .get(`/violation/${this.$session.get("userNo")}`, {
+        headers: {
+          token: this.$session.get("token"),
+        },
+      })
+      .then(({ data }) => {
+        if (data) {
+          // this.local_violationitems = data;
+          // this.items = data;
+          this.$store.state.violationitems = data;
+          // alert("ㅔㅗ");
+        } else {
+          alert(" 실패했습니다.");
+        }
+      })
+      .catch(() => {
+        alert("에러가 발생했습니다.");
+      });
   },
 };
 </script>

@@ -36,10 +36,10 @@ public class ViolationServiceImpl implements ViolationService {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String clientId = "jj121pv6s1";
 		String clientSecret = "wVqpq3w1PkpJ0S5Qm2IZqHHVKDydoTW7KVq9HM7F";
-		
+
 		String apiURL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=";
 		try {
-			apiURL += violation.getLat() + "," + violation.getLng() + "&output=json&orders=addr,admcode,roadaddr";
+			apiURL += violation.getLng() + "," + violation.getLat() + "&output=json&orders=addr,admcode,roadaddr";
 			URL url = new URL(apiURL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
