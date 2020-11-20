@@ -1,6 +1,6 @@
 # 나도 내가 무섭조(서울 2반 11조)
 
-<img src = "/uploads/b5b24fcf568201fe27804b5194574274/logo.jpg" width="50%" height="50%">
+![](README.assets/logo.jpg)
 
 
 ## 분노의민원
@@ -182,7 +182,6 @@ def make_movie():
 - S3 서버에 저장될 영상을 업로드해준다.
 - 전송할 영상의 이름은 중복 시에 에러를 발생시키므로 random 함수로 이름을 난수 배정
 
-
 # 
 
 
@@ -194,43 +193,45 @@ def make_movie():
 차량 운행중에 교통법규 위반사례를 목격했다면 블랙박스와 연결된 버튼을 눌러 지난 20초 상황에 대해서만 영상을 본인 웹페이지 계정으로 전송합니다.
 ```
 
-![블랙박스사진](/uploads/6685176ae4b93b95b1da5d4343df6272/블랙박스사진.jpg)
-![홈페이지사진1](/uploads/6257cc270385159ba96fc4fa4b759f54/홈페이지사진1.PNG)
-![카드첫클릭](/uploads/362e2c28926b53b0f90a647b94729b38/카드첫클릭.PNG)
+![](README.assets/블랙박스사진.jpg)
+![](README.assets/홈페이지사진1.PNG)
+![](README.assets/카드첫클릭.PNG)
+
 ```bash
 보내온 영상 썸내일을 클릭하게 되면 블랙박스 내 센서로 영상 및 영상정보들이 자동으로 저장되어진 것을 확인할 수 있습니다.
 ```
-![HowToUse1](/uploads/a619d391934835822510474ee01f0c6f/HowToUse1.png)
+![](README.assets/HowToUse1.png)
 ```bash
 초기 상태는 신고 미접수로 아직 스마트 국민제보 사이트에 민원을 접수하기 전 단계입니다
 ```
-![HowToUse3](/uploads/e6106f6af23ffd75004c29b9e82b0ac7/HowToUse3.png)
+![](README.assets/HowToUse3.png)
 ```bash
 제보 상세보기에서는 다음의 빈칸들을 작성 후 저장하기를 누릅니다
 ```
-![HowToUse4](/uploads/272fc6084d8f72fc3f3901116929f22b/HowToUse4.png)
+![](README.assets/HowToUse4.png)
 ```bash
 영상을 다운로드 받은 후 하단의 스마트 국민제보로 신고하러 가기 버튼을 누릅니다.
 ```
-![HowToUse5](/uploads/bda41e62d757f5b8e0e352dd5b0b95c2/HowToUse5.png)
+![](README.assets/HowToUse5.png)
 ```bash
 스마트 국민제보 사이트에서 회원가입 후 로그인을 합니다
 ```
-![HowToUse6](/uploads/730aee4a420384124fd2fc319fe8d7df/HowToUse6.png)
+![](README.assets/HowToUse6.png)
 ```bash
 메인화면에 보이는 교통위반 버튼을 누릅니다.
 ```
-![HowToUse7](/uploads/433d79f597f4f08d72f273e3389d07d4/HowToUse7.png)
+![](README.assets/HowToUse7.png)
 ```bash
 분노의 민원 제보목록에 저장된카드 를 보면서 1~8번 순서대로 교통위반신고 항목을 기입하고 신고하기 버튼을 누릅니다.
 ```
-![HowToUse8](/uploads/d0fd8751c1746ce1f51c77a3dc7ef70b/HowToUse8.png)
+![](README.assets/HowToUse8.png)
 ```bash
 신고가 완료됐다면 분노의 민원 사이트로 돌아와 사진처럼 신고 미접수 상태를 접수 완료 상태로 바꿔줍니다.
 ```
 
 # 라이센스
 [MIT License 2.0](https://lab.ssafy.com/s03-webmobile3-sub2/s03p12a211/blob/develop/LICENSE)
+
 # 기타(개발 일정,  자랑하고 싶은 것, 변화된 이슈 등)
 
 # 개발 규칙
