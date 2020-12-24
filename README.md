@@ -77,7 +77,7 @@ vi default
 # Front-End Setting
 root <Front 빌드 파일 위치>;
 <index 파일명>;
-server_namㄷ <서버 도메인>;
+server_name <서버 도메인>;
 
 # Back-End Setting
 proxy_pass <웹 사이트 URL>
